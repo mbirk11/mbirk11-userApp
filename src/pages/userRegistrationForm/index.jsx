@@ -5,6 +5,7 @@ import { Button, Datepicker } from "flowbite-react";
 import React, { useContext } from "react";
 import Navigation from "../../components/navBar";
 import { UserDataContext } from "../../userDataProvider";
+import { useNavigate } from "react-router-dom";
 
 const UserRegistrationForm = () => {
   const {
@@ -17,11 +18,18 @@ const UserRegistrationForm = () => {
     handleDeleteCar,
   } = useContext(UserDataContext);
 
+  const navigate = useNavigate();
+
   return (
     <>
       <Navigation />
       <section className="bg-white dark:bg-gray-900  ">
-        <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16 ">
+        <div
+          className="py-8 px-4 mx-auto max-w-2xl lg:py-16 "
+          onClick={() => {
+            navigate("/");
+          }}
+        >
           <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
             Add a new user
           </h2>

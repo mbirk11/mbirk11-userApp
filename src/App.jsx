@@ -12,7 +12,7 @@ function App() {
       <UserDataProvider>
         <Routes>
           <Route path="/" element={<UserRegistrationForm />} />
-          <Route path="usertable" element={<UsersTable />} />
+          <Route path="/usertable" element={<UsersTable />} />
         </Routes>
       </UserDataProvider>
     </>
