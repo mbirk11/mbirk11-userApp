@@ -2,24 +2,12 @@
 
 import React, { createContext, useCallback, useEffect, useState } from "react";
 import useLocalStorage from "./hooks/useLocalStorage";
+import { initialValue, initialEmptyValue } from "./data/initiaData";
 
 export const UserDataContext = createContext();
-const initialValue = {
-  users: [
-    {
-      name: "",
-      lastName: "",
-      idNumber: "",
-      dateOfBirthd: "",
-      cars: [{ carNumber: "", carBrand: "", carModel: "" }],
-      edit: false,
-    },
-  ],
-  limit: 5,
-};
 
 const UserDataProvider = ({ children }) => {
-  const [inputValue, setInputValue] = useState(initialValue);
+  const [inputValue, setInputValue] = useState(initialEmptyValue);
   const [userList, setUserList] = useLocalStorage("list", initialValue);
   const [searchInput, setSearchInput] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,7 +23,7 @@ const UserDataProvider = ({ children }) => {
             user.name.toLowerCase().includes(searchInput.toLowerCase()) ||
             user.lastName.toLowerCase().includes(searchInput.toLowerCase()) ||
             user.idNumber.toLowerCase().includes(searchInput.toLowerCase()) ||
-            user.dateOfBirthd
+            user.dateOfBirth
               .toLowerCase()
               .includes(searchInput.toLowerCase()) ||
             user.cars.some(
@@ -111,7 +99,7 @@ const UserDataProvider = ({ children }) => {
     setInputValue((prevData) => ({
       ...prevData,
       users: prevData.users.map((user, index) =>
-        index === 0 ? { ...user, dateOfBirthd: formattedDate } : user
+        index === 0 ? { ...user, dateOfBirth: formattedDate } : user
       ),
     }));
   };
@@ -174,7 +162,7 @@ const UserDataProvider = ({ children }) => {
           name: "",
           lastName: "",
           idNumber: "",
-          dateOfBirthd: "",
+          dateOfBirth: "",
           cars: [{ carNumber: "", carBrand: "", carModel: "" }],
         },
       ],

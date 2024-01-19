@@ -13,7 +13,7 @@ const fieldNames = [
   "name",
   "lastName",
   "idNumber",
-  "dateOfBirthd",
+  "dateOfBirth",
   "carNumber",
   "carBrand",
   "carModel",
@@ -82,7 +82,7 @@ const userTable = () => {
           <div className=" h-50  flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
             <Search />
             <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-              <Button onClick={() => navigate("/")}>
+              <Button onClick={() => navigate("/userRegistration")}>
                 <svg
                   className="h-3.5 w-3.5 mr-2"
                   fill="currentColor"
@@ -164,18 +164,14 @@ const userTable = () => {
                       {user.edit ? (
                         <td className="px-4 py-3">
                           <TextInput
-                            value={user.dateOfBirthd}
+                            value={user.dateOfBirth}
                             onChange={(e) =>
-                              handleUserInputChange(
-                                e,
-                                userIndex,
-                                "dateOfBirthd"
-                              )
+                              handleUserInputChange(e, userIndex, "dateOfBirth")
                             }
                           />
                         </td>
                       ) : (
-                        <td className="px-4 py-3">{user.dateOfBirthd}</td>
+                        <td className="px-4 py-3">{user.dateOfBirth}</td>
                       )}
 
                       <td colSpan="4">
@@ -238,7 +234,7 @@ const userTable = () => {
                           </div>
                         ))}
                       </td>
-                      <td className="px-4 py-3 flex gap-2 items-center justify-end relative">
+                      <td className="px-4 py-3 flex gap-2 items-center justify-end ">
                         <Dropdown label="Change">
                           <Dropdown.Item
                             color="dark"

@@ -56,11 +56,11 @@ const Pagination = () => {
     >
       <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
         Showing
-        <span className="font-semibold text-gray-900 dark:text-white">
-          {(currentPage - 1) * userList.limit + 1}
+        <span className="font-semibold text-gray-900 dark:text-white p-2">
+          {Math.min(currentPage * userList.limit, userList.users.length)}
         </span>
         of
-        <span className="font-semibold text-gray-900 dark:text-white">
+        <span className="font-semibold text-gray-900 dark:text-white p-2">
           {userList.users.length}
         </span>
       </span>

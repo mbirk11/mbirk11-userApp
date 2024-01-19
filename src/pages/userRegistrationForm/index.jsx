@@ -5,7 +5,7 @@ import { Button, Datepicker } from "flowbite-react";
 import React, { useContext } from "react";
 import Navigation from "../../components/navBar";
 import { UserDataContext } from "../../userDataProvider";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const UserRegistrationForm = () => {
   const {
@@ -23,7 +23,7 @@ const UserRegistrationForm = () => {
       <Navigation />
       <section className="bg-white dark:bg-gray-900  ">
         <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16 ">
-          <Link to="/">
+          <Link to="/userRegistration">
             <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
               Add a new user
             </h2>
@@ -71,13 +71,13 @@ const UserRegistrationForm = () => {
             </div>
             <div className="mb-6">
               <label
-                htmlFor="dateOfBirthd"
+                htmlFor="dateOfBirth"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Date of Birthd
+                Date of Birth
               </label>
               <Datepicker
-                value={inputValue.users[0].dateOfBirthd}
+                value={inputValue.users[0].dateOfBirth}
                 onSelectedDateChanged={(date) => handleDateChange(date)}
               />
             </div>
