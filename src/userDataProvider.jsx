@@ -182,7 +182,7 @@ const UserDataProvider = ({ children }) => {
         userList,
         handleDateChange,
         handleDeleteCar,
-
+        startIdx,
         setUserList,
         handleSearchInput,
         filteredList,

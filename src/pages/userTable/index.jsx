@@ -21,7 +21,7 @@ const fieldNames = [
 ];
 const userTable = () => {
   const navigate = useNavigate();
-  const { setUserList, handleEdit, displayedUsers } =
+  const { setUserList, handleEdit, displayedUsers, startIdx } =
     useContext(UserDataContext);
 
   const handleCarInputChange = (e, userIndex, carIndex, fieldName) => {
