@@ -1,11 +1,12 @@
 /** @format */
 
-import { Button, Datepicker } from "flowbite-react";
+import { Button } from "flowbite-react";
 
 import React, { useContext } from "react";
 import Navigation from "../../components/navBar";
 import { UserDataContext } from "../../userDataProvider";
 import { Link } from "react-router-dom";
+import DatePicker from "../../components/customComponents/datePicker";
 
 const UserRegistrationForm = () => {
   const {
@@ -14,7 +15,6 @@ const UserRegistrationForm = () => {
     handleCarInputChange,
     handleInputChange,
     addCar,
-    handleDateChange,
     handleDeleteCar,
   } = useContext(UserDataContext);
 
@@ -76,10 +76,7 @@ const UserRegistrationForm = () => {
               >
                 Date of Birth
               </label>
-              <Datepicker
-                value={inputValue.users[0].dateOfBirth}
-                onSelectedDateChanged={(date) => handleDateChange(date)}
-              />
+              <DatePicker />
             </div>
             <div className="mb-6">
               <label

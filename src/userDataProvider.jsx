@@ -40,22 +40,26 @@ const UserDataProvider = ({ children }) => {
 
   //Table inputs
   const handleEdit = (displayedUserIndex) => {
-    const userIndex = startIdx + displayedUserIndex;
+    const originalIndex =
+      startIdx + displayedUserIndex < filteredList.length
+        ? userList.users.findIndex(
+            (user) => user.id === filteredList[startIdx + displayedUserIndex].id
+          )
+        : -1;
 
-    setUserList((prevData) => {
-      const updatedUsers = [...prevData.users];
-      updatedUsers[userIndex] = {
-        ...updatedUsers[userIndex],
-        edit: !updatedUsers[userIndex].edit,
-      };
+    if (originalIndex !== -1) {
+      setUserList((prevData) => {
+        const updatedUsers = prevData.users.map((user, index) =>
+          index === originalIndex ? { ...user, edit: !user.edit } : user
+        );
 
-      return {
-        ...prevData,
-        users: updatedUsers,
-      };
-    });
+        return {
+          ...prevData,
+          users: updatedUsers,
+        };
+      });
+    }
   };
-
   //User's Registration
 
   const handleInputChange = (event) => {
@@ -89,20 +93,6 @@ const UserDataProvider = ({ children }) => {
       };
       return updatedInputValue;
     });
-  };
-
-  const handleDateChange = (date) => {
-    const formattedDate = date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-    setInputValue((prevData) => ({
-      ...prevData,
-      users: prevData.users.map((user, index) =>
-        index === 0 ? { ...user, dateOfBirth: formattedDate } : user
-      ),
-    }));
   };
 
   const addCar = () => {
@@ -175,12 +165,12 @@ const UserDataProvider = ({ children }) => {
     <UserDataContext.Provider
       value={{
         inputValue,
+        setInputValue,
         handleSubmit,
         addCar,
         handleCarInputChange,
         handleInputChange,
         userList,
-        handleDateChange,
         handleDeleteCar,
         startIdx,
         setUserList,
@@ -190,6 +180,7 @@ const UserDataProvider = ({ children }) => {
         setCurrentPage,
         handleEdit,
         displayedUsers,
+        endIdx,
       }}
     >
       {children}

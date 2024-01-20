@@ -21,21 +21,26 @@ const fieldNames = [
 ];
 const userTable = () => {
   const navigate = useNavigate();
-  const { setUserList, handleEdit, displayedUsers, startIdx } =
+  const { setUserList, handleEdit, displayedUsers, startIdx, filteredList } =
     useContext(UserDataContext);
 
   const handleCarInputChange = (e, userIndex, carIndex, fieldName) => {
     const { value } = e.target;
 
     setUserList((prevData) => {
-      const updatedUsers = [...prevData.users];
-      const absoluteUserIndex = startIdx + userIndex;
-      updatedUsers[absoluteUserIndex] = {
-        ...updatedUsers[absoluteUserIndex],
-        cars: updatedUsers[absoluteUserIndex].cars.map((car, index) =>
-          index === carIndex ? { ...car, [fieldName]: value } : car
-        ),
-      };
+      const userId = filteredList[startIdx + userIndex].id;
+      const updatedUsers = prevData.users.map((user) => {
+        if (user.id === userId) {
+          return {
+            ...user,
+            cars: user.cars.map((car, cIndex) =>
+              cIndex === carIndex ? { ...car, [fieldName]: value } : car
+            ),
+          };
+        }
+        return user;
+      });
+
       return {
         ...prevData,
         users: updatedUsers,
@@ -47,12 +52,11 @@ const userTable = () => {
     const { value } = e.target;
 
     setUserList((prevData) => {
-      const updatedUsers = [...prevData.users];
-      const absoluteUserIndex = startIdx + userIndex;
-      updatedUsers[absoluteUserIndex] = {
-        ...updatedUsers[absoluteUserIndex],
-        [fieldName]: value,
-      };
+      const userId = filteredList[startIdx + userIndex].id;
+      const updatedUsers = prevData.users.map((user) =>
+        user.id === userId ? { ...user, [fieldName]: value } : user
+      );
+
       return {
         ...prevData,
         users: updatedUsers,
@@ -62,9 +66,9 @@ const userTable = () => {
 
   const handleDelete = (userIndex) => {
     setUserList((prevData) => {
-      const updatedUsers = [...prevData.users];
-      const absoluteUserIndex = startIdx + userIndex;
-      updatedUsers.splice(absoluteUserIndex, 1);
+      const userId = filteredList[startIdx + userIndex].id;
+      const updatedUsers = prevData.users.filter((user) => user.id !== userId);
+
       return {
         ...prevData,
         users: updatedUsers,
