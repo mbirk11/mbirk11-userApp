@@ -12,35 +12,36 @@ const UserDataProvider = ({ children }) => {
   const [searchInput, setSearchInput] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  //User's table
   const handleSearchInput = (e) => {
     setSearchInput(e.target.value);
-  };
-  const filteredList = {
-    users: searchInput
-      ? userList.users.filter(
-          (user) =>
-            user.name.toLowerCase().includes(searchInput.toLowerCase()) ||
-            user.lastName.toLowerCase().includes(searchInput.toLowerCase()) ||
-            user.idNumber.toLowerCase().includes(searchInput.toLowerCase()) ||
-            user.dateOfBirth
-              .toLowerCase()
-              .includes(searchInput.toLowerCase()) ||
-            user.cars.some(
-              (car) =>
-                car.carNumber
-                  .toLowerCase()
-                  .includes(searchInput.toLowerCase()) ||
-                car.carBrand
-                  .toLowerCase()
-                  .includes(searchInput.toLowerCase()) ||
-                car.carModel.toLowerCase().includes(searchInput.toLowerCase())
-            )
-        )
-      : userList.users,
+    setCurrentPage(1);
   };
 
-  const handleEdit = (userIndex) => {
+  const filteredList = searchInput
+    ? userList.users.filter(
+        (user) =>
+          user.name.toLowerCase().includes(searchInput.toLowerCase()) ||
+          user.lastName.toLowerCase().includes(searchInput.toLowerCase()) ||
+          user.idNumber.toLowerCase().includes(searchInput.toLowerCase()) ||
+          user.dateOfBirth.toLowerCase().includes(searchInput.toLowerCase()) ||
+          user.cars.some(
+            (car) =>
+              car.carNumber.toLowerCase().includes(searchInput.toLowerCase()) ||
+              car.carBrand.toLowerCase().includes(searchInput.toLowerCase()) ||
+              car.carModel.toLowerCase().includes(searchInput.toLowerCase())
+          )
+      )
+    : userList.users;
+
+  // Pagination
+  const startIdx = (currentPage - 1) * userList.limit;
+  const endIdx = startIdx + userList.limit;
+  const displayedUsers = filteredList.slice(startIdx, endIdx);
+
+  //Table inputs
+  const handleEdit = (displayedUserIndex) => {
+    const userIndex = startIdx + displayedUserIndex;
+
     setUserList((prevData) => {
       const updatedUsers = [...prevData.users];
       updatedUsers[userIndex] = {
@@ -153,12 +154,13 @@ const UserDataProvider = ({ children }) => {
     const newUser = inputValue.users[0];
     setUserList((prevData) => ({
       ...prevData,
-      users: [...prevData.users, newUser],
+      users: [...prevData.users, { ...newUser, id: userList.users.length }],
     }));
     setInputValue((prevData) => ({
       ...prevData,
       users: [
         {
+          id: "",
           name: "",
           lastName: "",
           idNumber: "",
@@ -180,12 +182,14 @@ const UserDataProvider = ({ children }) => {
         userList,
         handleDateChange,
         handleDeleteCar,
-        handleEdit,
+
         setUserList,
         handleSearchInput,
         filteredList,
         currentPage,
         setCurrentPage,
+        handleEdit,
+        displayedUsers,
       }}
     >
       {children}

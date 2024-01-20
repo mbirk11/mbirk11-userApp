@@ -10,6 +10,7 @@ import Search from "../../components/search";
 
 //table fileds
 const fieldNames = [
+  "id",
   "name",
   "lastName",
   "idNumber",
@@ -20,23 +21,18 @@ const fieldNames = [
 ];
 const userTable = () => {
   const navigate = useNavigate();
-  const { filteredList, handleEdit, setUserList, userList, currentPage } =
+  const { setUserList, handleEdit, displayedUsers } =
     useContext(UserDataContext);
 
-  // Pagination
-  const startIdx = (currentPage - 1) * userList.limit;
-  const endIdx = startIdx + userList.limit;
-  const displayedUsers = filteredList.users.slice(startIdx, endIdx);
-
-  //Table inputs
   const handleCarInputChange = (e, userIndex, carIndex, fieldName) => {
     const { value } = e.target;
 
     setUserList((prevData) => {
       const updatedUsers = [...prevData.users];
-      updatedUsers[userIndex] = {
-        ...updatedUsers[userIndex],
-        cars: updatedUsers[userIndex].cars.map((car, index) =>
+      const absoluteUserIndex = startIdx + userIndex;
+      updatedUsers[absoluteUserIndex] = {
+        ...updatedUsers[absoluteUserIndex],
+        cars: updatedUsers[absoluteUserIndex].cars.map((car, index) =>
           index === carIndex ? { ...car, [fieldName]: value } : car
         ),
       };
@@ -52,8 +48,9 @@ const userTable = () => {
 
     setUserList((prevData) => {
       const updatedUsers = [...prevData.users];
-      updatedUsers[userIndex] = {
-        ...updatedUsers[userIndex],
+      const absoluteUserIndex = startIdx + userIndex;
+      updatedUsers[absoluteUserIndex] = {
+        ...updatedUsers[absoluteUserIndex],
         [fieldName]: value,
       };
       return {
@@ -66,7 +63,8 @@ const userTable = () => {
   const handleDelete = (userIndex) => {
     setUserList((prevData) => {
       const updatedUsers = [...prevData.users];
-      updatedUsers.splice(userIndex, 1);
+      const absoluteUserIndex = startIdx + userIndex;
+      updatedUsers.splice(absoluteUserIndex, 1);
       return {
         ...prevData,
         users: updatedUsers,
@@ -104,13 +102,13 @@ const userTable = () => {
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                  {fieldNames.slice(0, 4).map((field, index) => (
+                  {fieldNames.slice(0, 5).map((field, index) => (
                     <th key={index} scope="col" className="px-4 py-3">
                       {field}
                     </th>
                   ))}
                   <td className="flex justify-between  ">
-                    {fieldNames.slice(4, 7).map((carField, i) => (
+                    {fieldNames.slice(5, 8).map((carField, i) => (
                       <div
                         key={i}
                         className="px-4 py-3 border-b dark:border-gray-700 text-xs font-bold text-gray-900 dark:text-gray-300"
@@ -125,6 +123,18 @@ const userTable = () => {
                 {displayedUsers.map((user, userIndex) => (
                   <React.Fragment key={userIndex}>
                     <tr className="border-b dark:border-gray-700">
+                      {user.edit ? (
+                        <td className="px-4 py-3">
+                          <TextInput
+                            value={user.id}
+                            onChange={(e) =>
+                              handleUserInputChange(e, userIndex, "id")
+                            }
+                          />
+                        </td>
+                      ) : (
+                        <td className="px-4 py-3">{user.id}</td>
+                      )}
                       {user.edit ? (
                         <td className="px-4 py-3">
                           <TextInput

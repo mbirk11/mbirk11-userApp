@@ -77,6 +77,7 @@ export const initialValue = {
 export const initialEmptyValue = {
   users: [
     {
+      id: 0,
       name: "",
       lastName: "",
       idNumber: "",

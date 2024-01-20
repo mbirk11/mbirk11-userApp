@@ -7,7 +7,7 @@ const Pagination = () => {
   const { filteredList, userList, currentPage, setCurrentPage } =
     useContext(UserDataContext);
 
-  const totalPages = Math.ceil(filteredList.users.length / userList.limit);
+  const totalPages = Math.ceil(filteredList.length / userList.limit);
 
   const onPageChange = (newPage) => {
     if (newPage > 0 && newPage <= totalPages) {
