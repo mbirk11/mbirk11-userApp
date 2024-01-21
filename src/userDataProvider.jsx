@@ -142,9 +142,10 @@ const UserDataProvider = ({ children }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const newUser = inputValue.users[0];
+    const newUserId = userList.users.length;
     setUserList((prevData) => ({
       ...prevData,
-      users: [...prevData.users, { ...newUser, id: userList.users.length }],
+      users: [...prevData.users, { ...newUser, id: newUserId }],
     }));
     setInputValue((prevData) => ({
       ...prevData,

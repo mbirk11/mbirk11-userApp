@@ -2,10 +2,13 @@
 
 import React, { useContext } from "react";
 import { UserDataContext } from "../../userDataProvider";
+import { useNavigate } from "react-router-dom";
 
 const Pagination = () => {
   const { filteredList, userList, currentPage, setCurrentPage } =
     useContext(UserDataContext);
+
+  const navigate = useNavigate();
 
   const totalPages = Math.ceil(filteredList.length / userList.limit);
 
@@ -13,7 +16,9 @@ const Pagination = () => {
     if (newPage > 0 && newPage <= totalPages) {
       setCurrentPage(newPage);
     }
+    navigate(`?page=${newPage}`);
   };
+
   const generatePageNumbers = () => {
     const pages = [];
     const visiblePages = 5;
@@ -67,7 +72,6 @@ const Pagination = () => {
       <ul className="inline-flex items-stretch -space-x-px">
         <li>
           <a
-            href="#"
             className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
@@ -114,7 +118,6 @@ const Pagination = () => {
         ))}
         <li>
           <a
-            href="#"
             className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}

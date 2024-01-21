@@ -21,6 +21,7 @@ const fieldNames = [
 ];
 const userTable = () => {
   const navigate = useNavigate();
+
   const { setUserList, handleEdit, displayedUsers, startIdx, filteredList } =
     useContext(UserDataContext);
 
@@ -249,7 +250,7 @@ const userTable = () => {
                         ))}
                       </td>
                       <td className="px-4 py-3 flex gap-2 items-center justify-end ">
-                        <Dropdown label="Change">
+                        <Dropdown label={user.edit ? "Save" : "edit"}>
                           <Dropdown.Item
                             color="dark"
                             onClick={() => handleEdit(userIndex)}
