@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { initialValue, initialEmptyValue } from "./data/initiaData";
 

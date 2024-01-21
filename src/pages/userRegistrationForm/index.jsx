@@ -69,10 +69,10 @@ const UserRegistrationForm = () => {
                 />
               </div>
             </div>
-            <div className="mb-6">
+            <div className="mb-6 ">
               <label
                 htmlFor="dateOfBirth"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
               >
                 Date of Birth
               </label>
